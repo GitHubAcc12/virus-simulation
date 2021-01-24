@@ -1,0 +1,25 @@
+#canvas-container {
+    width: 100%;
+    text-align:center;
+ }
+ 
+ canvas {
+    display: inline;
+ }
+
+ .heading {
+     text-align: center;
+     font-family: Arial, Helvetica, sans-serif;
+ }
+
+ #config-table {
+     margin-left: auto;
+     margin-right: auto;
+     text-align: center;
+     vertical-align: middle;
+ }
+
+ .center-wrapper {
+     margin: 10px;
+     text-align: center;
+ }

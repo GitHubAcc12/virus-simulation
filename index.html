@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+
+<head>
+    <link rel="stylesheet" href="stylesheet.css" />
+</head>
+
+<body>
+    <h1 class="heading">Virus Spread Simulation</h1>
+    <div id="canvas-container">
+        <canvas id="simulation" width="480" height="320"></canvas>
+    </div>
+    <h3 class="heading">Configuration</h5>
+        <table id="config-table">
+            <tr>
+                <td> Population </td>
+                <td> Continents </td>
+                <td> Density Hubs </td>
+                <td> Movement Speed </td>
+            </tr>
+            <tr>
+                <td> <input id="population-input" type="number"> </td>
+                <td> <input id="continent-input" type="number"> </td>
+                <td> <input id="density-hubs-input" type="number"> </td>
+                <td> <input id="movement-speed-input" type="number"> </td>
+            </tr>
+        </table>
+
+        <div class="center-wrapper">
+            <button id="load-config-btton" onclick="loadConfig();"> Load Configuration </button>
+        </div>
+        <!-- Simulation comes from this JavaScript -->
+        <script src="./js/simulation.js"></script>
+</body>
+
+</html>

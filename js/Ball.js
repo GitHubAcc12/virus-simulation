@@ -8,19 +8,21 @@ class Ball {
         this.max_y = canvas_info["max_y"];
         this.radius = canvas_info["ballRadius"];
         this.ctx = ctx;
-        this.speed = speed
+        this.x_speed = speed;
+        this.y_speed = -speed;
     }
 
     moveSelf() {
-        if (x + dx > this.max_x - this.radius || x + this.speed < this.radius) {
-            dx = -this.speed;
+        console.log("Moving ball");
+        if (this.x + this.x_speed > this.max_x - this.radius || this.x + this.x_speed < this.radius) {
+            this.x_speed = -this.x_speed;
         }
-        if (y + dy > this.max_y - this.radius || y - this.speed < this.radius) {
-            dy = this.speed;
+        if (this.y + this.y_speed > this.max_y - this.radius || this.y - this.y_speed < this.radius) {
+            this.y_speed = -this.y_speed;
         }
     
-        this.x += this.speed;
-        this.y += -this.speed;
+        this.x += this.x_speed;
+        this.y += this.y_speed;
     }
 
     drawSelf() {

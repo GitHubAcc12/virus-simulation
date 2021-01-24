@@ -31,9 +31,12 @@ function drawBackground() {
 }
 
 function draw() {
+    console.log("In draw()");
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
     drawBackground();
-    for (var i; i < balls.length; i++) {
+    var i;
+    for (i = 0; i < balls.length; i++) {
+        console.log(`Balls: ${balls.length}`);
         balls[i].drawSelf();
     }
 }
@@ -49,7 +52,7 @@ function loadConfig() {
     for (i = 0; i < population; i++) {
         var speed = Math.random()*5 + 1;
         var ball = new Ball(ctx, canvas_info, speed);
-        console.log(`Ball.speed: ${ball.speed}`)
+        console.log(`Ball.speed: ${ball.x_speed}`);
         balls.push(ball);
         ball.drawSelf();
     }

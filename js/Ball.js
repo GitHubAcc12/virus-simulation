@@ -12,21 +12,22 @@ class Ball {
     }
 
     moveSelf() {
-        if (x + dx > thix.max_x - this.radius || x + dx < this.radius) {
-            dx = -dx;
+        if (x + dx > this.max_x - this.radius || x + this.speed < this.radius) {
+            dx = -this.speed;
         }
-        if (y + dy > thix.max_y - this.radius || y + dy < this.radius) {
-            dy = -dy;
+        if (y + dy > this.max_y - this.radius || y - this.speed < this.radius) {
+            dy = this.speed;
         }
     
-        x += dx;
-        y += dy;
+        this.x += this.speed;
+        this.y += -this.speed;
     }
 
-    drawSelf(x, y) {
+    drawSelf() {
+        this.moveSelf();
         ctx.fillStyle = "blue";
         ctx.beginPath();
-        ctx.arc(x, y, 10, 0, Math.PI * 2);
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
     }

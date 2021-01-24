@@ -12,16 +12,18 @@ var ballRadius = 10;
 var dx = 2;
 var dy = -2;
 
-draw();
-
-
-function drawBall() {
-    ctx.fillStyle = "blue";
-    ctx.beginPath();
-    ctx.arc(x, y, 10, 0, Math.PI * 2);
-    ctx.fill();
-    ctx.closePath();
+var canvas_info = {
+    "x": x,
+    "y": y,
+    "ballRadius": ballRadius,
+    "max_x": canvas.width,
+    "max_y": canvas.height
 }
+
+var balls = [];
+
+drawBackground();
+
 
 function drawBackground() {
     ctx.fillStyle = "#d2d6d3";
@@ -31,25 +33,28 @@ function drawBackground() {
 function draw() {
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
     drawBackground();
-    drawBall();
-    
-    if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) {
-        dx = -dx;
+    for (var i; i < balls.length; i++) {
+        balls[i].drawSelf();
     }
-    if (y + dy > canvas.height - ballRadius || y + dy < ballRadius) {
-        dy = -dy;
-    }
-
-    x += dx;
-    y += dy;
 }
 
 function loadConfig() {
-    var population = document.getElementById("population-input");
+    balls = [];
+    var population = parseInt(document.getElementById("population-input").value);
+    console.log("population: " + population);
     // Balls all start on the same point, move around and get drawn to density hubs
     // Then after 10 seconds disease starts spreading
 
-    draw
+    var i;
+    for (i = 0; i < population; i++) {
+        var speed = Math.random()*5 + 1;
+        var ball = new Ball(ctx, canvas_info, speed);
+        console.log(`Ball.speed: ${ball.speed}`)
+        balls.push(ball);
+        ball.drawSelf();
+    }
+
+    console.log(`# Balls: ${balls.length}`);
 
     setInterval(draw, 10);
 }

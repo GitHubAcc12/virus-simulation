@@ -1,20 +1,22 @@
 class Ball {
 
 
-    constructor(ctx, x, y, canvas_info) {
+    constructor(ctx, x, y, canvas_info, speed) {
         this.x = x;
         this.y = y;
         this.max_x = canvas_info["max_x"];
         this.max_y = canvas_info["max_y"];
         this.radius = canvas_info["ballRadius"];
         this.ctx = ctx;
-        this.changeDirection();
+        this.speed = speed;
         this.infected = false;
-    }
+
+        this.changeDirection();
+        }
 
     changeDirection() {
-        this.x_speed = Math.random()*10 - 5;
-        this.y_speed = -(Math.random()*10 - 5);
+        this.x_speed = Math.random()*2*this.speed - this.speed;
+        this.y_speed = -(Math.random()*2*this.speed - this.speed);
     }
 
     moveSelf() {

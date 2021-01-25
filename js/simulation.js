@@ -12,6 +12,7 @@ var collision_counter;
 var transmission_rate = 1;
 var initially_infected = 1;
 var intervals = [];
+var movement_speed = 9;
 
 var canvas_info = {
     "ballRadius": ballRadius,
@@ -89,18 +90,23 @@ function loadConfig() {
 
     collision_counter = 0;
     balls = [];
+
+    // get user configured values
     var population = parseInt(document.getElementById("population-input").value);
     var user_transmission_rate = document.getElementById("transmission-rate-input").value;
     if(user_transmission_rate != "") {
         console.log("Transmission rate: " + user_transmission_rate);
         transmission_rate = parseFloat(user_transmission_rate);
     }
-    console.log("population: " + population);
+    var move_speed = parseFloat(document.getElementById("movement-speed-input").value);
+    if(move_speed != "") {
+        movement_speed = move_speed;
+    }
     // Balls all start on the same point, move around and get drawn to density hubs
     // Then after 10 seconds disease starts spreading
     var i;
     for (i = 0; i < population; i++) {
-        var ball = new Ball(ctx, Math.random()*canvas.width, Math.random()*canvas.height, canvas_info);
+        var ball = new Ball(ctx, Math.random()*canvas.width, Math.random()*canvas.height, canvas_info, movement_speed);
         balls.push(ball);
         ball.drawSelf();
     }

@@ -7,7 +7,7 @@ canvas.setAttribute("align", "center");
 var ctx = canvas.getContext("2d");
 var x = canvas.width / 2;
 var y = canvas.height - 30;
-var ballRadius = 10;
+var ballRadius = 5;
 
 var canvas_info = {
     "x": x,
@@ -36,6 +36,13 @@ function draw() {
     }
 }
 
+function changeBallDirections() {
+    var i;
+    for (i = 0; i < balls.length; i++) {
+        balls[i].changeDirection();
+    }
+}
+
 function loadConfig() {
     balls = [];
     var population = parseInt(document.getElementById("population-input").value);
@@ -45,13 +52,13 @@ function loadConfig() {
 
     var i;
     for (i = 0; i < population; i++) {
-        var speed = Math.random()*5 + 1;
-        var ball = new Ball(ctx, canvas_info, speed);
+        var ball = new Ball(ctx, canvas_info);
         balls.push(ball);
         ball.drawSelf();
     }
 
     setInterval(draw, 10);
+    setInterval(changeBallDirections, 1000);
 }
 
 

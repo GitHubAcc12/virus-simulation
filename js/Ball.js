@@ -1,14 +1,15 @@
 class Ball {
 
 
-    constructor(ctx, canvas_info) {
-        this.x = canvas_info["x"];
-        this.y = canvas_info["y"];
+    constructor(ctx, x, y, canvas_info) {
+        this.x = x;
+        this.y = y;
         this.max_x = canvas_info["max_x"];
         this.max_y = canvas_info["max_y"];
         this.radius = canvas_info["ballRadius"];
         this.ctx = ctx;
         this.changeDirection();
+        this.infected = false;
     }
 
     changeDirection() {
@@ -30,7 +31,11 @@ class Ball {
 
     drawSelf() {
         this.moveSelf();
-        ctx.fillStyle = "blue";
+        if(this.infected) {
+            ctx.fillStyle = "red";
+        } else {
+            ctx.fillStyle = "blue";
+        }
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();

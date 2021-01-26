@@ -10,6 +10,12 @@ class GravityPoint {
         this.extendedRadius = radius*5;
     }
 
+    cureSelf() {
+        this.infected = false;
+        console.log("Cured!");
+        this.drawSelf();
+    }
+
     drawSelf() {
         if(this.infected) {
             ctx.fillStyle = "orange";

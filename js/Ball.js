@@ -12,6 +12,8 @@ class Ball {
         this.infected = false;
         this.last_visited_city;
         this.infected_days = 0;
+        this.dead = false;
+        this.color = "blue";
         this.randomDirection();
     }
 
@@ -31,6 +33,29 @@ class Ball {
         }
     }
 
+    infect() {
+        if(this.infected) {
+            return false;
+        }
+        this.infected = true;
+        this.color = "red";
+        return true;
+    }
+
+    recover() {
+        this.infected = false;
+        this.color = "blue";
+    }
+    /*
+    kill() {
+        if (Math.random() < this.lethality_rate) {
+            this.dead = true;
+            this.color = "black";
+        } else {
+            this.infected = false;
+        }
+    }
+    */
     moveSelf() {
         if (this.x + this.x_speed > this.max_x - this.radius || this.x + this.x_speed < this.radius) {
             this.x_speed = -this.x_speed;
@@ -45,11 +70,7 @@ class Ball {
 
     drawSelf() {
         this.moveSelf();
-        if (this.infected) {
-            ctx.fillStyle = "red";
-        } else {
-            ctx.fillStyle = "blue";
-        }
+        ctx.fillStyle = this.color;
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
         ctx.fill();

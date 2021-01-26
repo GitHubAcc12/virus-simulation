@@ -19,6 +19,8 @@ var population;
 var disease_duration;
 var lethality_rate;
 
+const DAY_LENGTH = 1000;
+
 
 var canvas_info = {
     "ballRadius": ballRadius,
@@ -63,18 +65,22 @@ function kill(ballIndex) {
     if (Math.random() < lethality_rate) {
         balls.splice(ballIndex, 1);
     } else {
-        balls[ballIndex].infected = false;
+        balls[ballIndex].recover();
     }
+}
+
+function killBallLater(ballIndex) {
+    setTimeout(() => { kill(ballIndex); }, disease_duration*DAY_LENGTH);
 }
 
 function incrementDaysPassed() {
     days_passed++;
-    var i;
+    /*var i;
     for (i = 0; i < balls.length; i++) {
         if (balls[i].infected && ++balls[i].infected_days >= disease_duration) {
             kill(i);
         }
-    }
+    }*/
 }
 
 function showDaysPassedText() {
@@ -116,7 +122,7 @@ function isCollision(objA, objB) {
 
 function isInRadius(ball, gravityPoint) {
     return Math.abs(ball.x - gravityPoint.x) <= gravityPoint.extendedRadius
-        && Math.abs(ball.y - gravityPoint.y) < + gravityPoint.extendedRadius;
+        && Math.abs(ball.y - gravityPoint.y) <= gravityPoint.extendedRadius;
 }
 
 function collisionDetection() {
@@ -131,8 +137,12 @@ function collisionDetection() {
                 if (!(balls[i].infected && balls[j].infected)) {
                     infected_counter++;
                 }
-                balls[i].infected = true;
-                balls[j].infected = true;
+                if(balls[i].infect()) {
+                    killBallLater(i)
+                }
+                if(balls[j].infect()) {
+                    killBallLater(j)
+                }
             }
         }
         for (j = 0; j < gravity_points.length; j++) {
@@ -140,22 +150,28 @@ function collisionDetection() {
                 if (!(balls[i].infected)) {
                     infected_counter++;
                     balls[i].infected = true;
+                    killBallLater(i)
                 }
                 gravity_points[j].infected = true;
+                cureGravityPointLater(j);
             }
         }
     }
+}
+
+function cureGravityPointLater(g_index) {
+    setTimeout(() => { gravity_points[g_index].infected = false; }, DAY_LENGTH*0.7);
 }
 
 
 function infectRandomBalls(number) {
     var i;
     for (i = 0; i < number; i++) {
-        var ball = balls[Math.floor(Math.random() * balls.length)];
-        while (ball.infected == true) {
-            ball = balls[Math.floor(Math.random() * balls.length)];
+        var ballIndex = Math.floor(Math.random() * balls.length);
+        while (!balls[ballIndex].infect()) {
+            ballIndex = Math.floor(Math.random() * balls.length);
         }
-        ball.infected = true;
+        killBallLater(ballIndex);
     }
 }
 
@@ -240,5 +256,5 @@ function loadConfig() {
     intervals.push(setInterval(draw, 10));
     intervals.push(setInterval(changeBallDirections, 1000));
     intervals.push(setInterval(saveDataPoint, 1000));
-    intervals.push(setInterval(incrementDaysPassed, 1000));
+    intervals.push(setInterval(incrementDaysPassed, DAY_LENGTH));
 }

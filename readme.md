@@ -8,3 +8,4 @@
 - [ ] Make movement across water rare
 - [ ] Create a scale of measure and adjust movement to that
 - [ ] Time of day impacting movement
+- [ ] Produce a plot at the end showing how long it took

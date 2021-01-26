@@ -6,4 +6,5 @@
 - [ ] Build Continents containing cities
 - [ ] Make water between continents
 - [ ] Make movement across water rare
+- [ ] Create a scale of measure and adjust movement to that
 - [ ] Time of day impacting movement

@@ -11,7 +11,7 @@ class Ball {
         this.speed = speed;
         this.infected = false;
         this.last_visited_city;
-
+        this.infected_days = 0;
         this.randomDirection();
     }
 

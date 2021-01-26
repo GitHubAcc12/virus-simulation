@@ -1,10 +1,9 @@
 var canvas = document.getElementById("simulation");
-var width = 3 * document.documentElement.clientWidth * window.devicePixelRatio / 4;//window.innerWidth * window.devicePixelRatio;
-var height = document.documentElement.clientHeight * window.devicePixelRatio / 2;//window.innerHeight * window.devicePixelRatio;
-canvas.setAttribute("width", width);
-canvas.setAttribute("height", height);
-canvas.setAttribute("align", "center");
 var ctx = canvas.getContext("2d");
+var days_passed = 0;
+
+initialize();
+
 var x = canvas.width / 2;
 var y = canvas.height - 30;
 var ballRadius = 5;
@@ -15,7 +14,10 @@ var intervals = [];
 var movement_speed = 9;
 var infection_data_plot = [];
 var gravity_points = [];
+var balls = [];
 var population;
+var disease_duration;
+var lethality_rate;
 
 
 var canvas_info = {
@@ -24,20 +26,24 @@ var canvas_info = {
     "max_y": canvas.height
 }
 
-var balls = [];
 
-drawBackground();
 
-function drawBackground() {
-    ctx.fillStyle = "#d2d6d3";
-    ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
+
+function initialize() {
+    resizeCanvas();
+    window.addEventListener("resize", resizeCanvas, false);
 }
 
+function resizeCanvas() {
+    canvas.width = 3 * window.innerWidth / 4;
+    canvas.height = window.innerHeight / 2;
+    canvas.setAttribute("align", "center");
+}
 
 
 function draw() {
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
-    drawBackground();
+    showDaysPassedText();
     var i;
     for (i = 0; i < balls.length; i++) {
         balls[i].drawSelf();
@@ -53,8 +59,35 @@ function draw() {
     }*/
 }
 
+function kill(ballIndex) {
+    if (Math.random() < lethality_rate) {
+        balls.splice(ballIndex, 1);
+    } else {
+        balls[ballIndex].infected = false;
+    }
+}
+
+function incrementDaysPassed() {
+    days_passed++;
+    var i;
+    for (i = 0; i < balls.length; i++) {
+        if (balls[i].infected && ++balls[i].infected_days >= disease_duration) {
+            kill(i);
+        }
+    }
+}
+
+function showDaysPassedText() {
+    ctx.font = "20px Arial";
+    const text = "Day " + days_passed;
+    ctx.fillStyle = "#000000";
+    ctx.fillText(text, (canvas.width/2) - (ctx.measureText(text).width/2), 20);
+
+    
+}
+
 function everyoneInfected() {
-    return population == infected_counter
+    return population == infected_counter;
 }
 
 function changeBallDirections() {
@@ -146,16 +179,7 @@ function saveDataPoint() {
     }
 }
 
-function loadConfig() {
-    // stop intervals
-    while (intervals.length > 0) {
-        clearInterval(intervals.pop());
-    }
-
-    infected_counter = initially_infected;
-    balls = [];
-    gravity_points = [];
-
+function getConfigValues() {
     // get user configured values
     var conf_population = document.getElementById("population-input").value;
     if (conf_population != "") {
@@ -177,7 +201,32 @@ function loadConfig() {
             gravity_points.push(new GravityPoint(ctx, Math.random() * canvas.width, Math.random() * canvas.height, true, ballRadius * 3.5));
         }
     }
+    var lethality = document.getElementById("lethality-rate-input").value;
+    if (lethality != "") {
+        lethality_rate = lethality;
+    }
+    var dis_dur = document.getElementById("disease-duration-input").value;
+    if (dis_dur != "") {
+        disease_duration = dis_dur;
+    }
+}
 
+function removeOldConfig() {
+    // stop intervals
+    while (intervals.length > 0) {
+        clearInterval(intervals.pop());
+    }
+
+    infected_counter = initially_infected;
+    balls = [];
+    gravity_points = [];
+    days_passed = 0;
+}
+
+function loadConfig() {
+    removeOldConfig();
+
+    getConfigValues();
     // Balls all start on the same point, move around and get drawn to density hubs
     // Then after 10 seconds disease starts spreading
     var i;
@@ -191,4 +240,5 @@ function loadConfig() {
     intervals.push(setInterval(draw, 10));
     intervals.push(setInterval(changeBallDirections, 1000));
     intervals.push(setInterval(saveDataPoint, 1000));
+    intervals.push(setInterval(incrementDaysPassed, 1000));
 }

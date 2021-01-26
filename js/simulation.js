@@ -63,7 +63,7 @@ function changeBallDirections() {
     for (i = 0; i < balls.length; i++) {
         var gravity = null;
         for (j = 0; j < gravity_points.length; j++) {
-            if (isInRadius(balls[i], gravity_points[j])) {//&& Math.random() < 0.6) {
+            if (isInRadius(balls[i], gravity_points[j]) && Math.random() < 0.6) {
                 gravity = gravity_points[j];
             }
         }

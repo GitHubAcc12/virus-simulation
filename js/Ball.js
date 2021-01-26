@@ -10,6 +10,7 @@ class Ball {
         this.ctx = ctx;
         this.speed = speed;
         this.infected = false;
+        this.last_visited_city;
 
         this.randomDirection();
     }
@@ -20,9 +21,14 @@ class Ball {
     }
 
     moveTo(to_x, to_y) {
-        this.x_speed = (to_x - this.x)/10;
-        this.y_speed = (to_y - this.y)/10;
-        console.log(`Speed: ${this.x_speed}`);
+        if (this.last_visited_city == null || (this.last_visited_city.x != to_x && this.last_visited_city.y != to_y)) {
+            this.x_speed = (to_x - this.x) / 100;
+            this.y_speed = (to_y - this.y) / 100;
+            this.last_visited_city = {
+                x: to_x,
+                y: to_y
+            }
+        }
     }
 
     moveSelf() {

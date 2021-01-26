@@ -7,6 +7,7 @@ class GravityPoint {
         this.inside = inside;
         this.infected = false;
         this.radius = radius;
+        this.extendedRadius = radius*5;
     }
 
     drawSelf() {
@@ -17,7 +18,9 @@ class GravityPoint {
             ctx.fillStyle = "green";
             ctx.strokeStyle = "green";
         }
+        
         ctx.beginPath();
+        ctx.setLineDash([]);
         ctx.arc(this.x, this.y, this.radius*0.5, 0, Math.PI * 2);
         ctx.fill();
         ctx.closePath();
@@ -27,6 +30,12 @@ class GravityPoint {
             ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
             ctx.stroke();
         }
+
+        // draw gravity radius
+        ctx.beginPath();
+        ctx.setLineDash([5, 5]);
+        ctx.arc(this.x, this.y, this.extendedRadius, 0, Math.PI * 2);
+        ctx.stroke();
     }
 
 }

@@ -33,6 +33,8 @@ function drawBackground() {
     ctx.fillRect(0, 0, canvas.clientWidth, canvas.height);
 }
 
+
+
 function draw() {
     ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
     drawBackground();
@@ -40,7 +42,7 @@ function draw() {
     for (i = 0; i < balls.length; i++) {
         balls[i].drawSelf();
     }
-    for(i = 0; i < gravity_points.length; i++) {
+    for (i = 0; i < gravity_points.length; i++) {
         gravity_points[i].drawSelf();
     }
     collisionDetection();
@@ -57,14 +59,31 @@ function everyoneInfected() {
 
 function changeBallDirections() {
     var i;
+    var j;
     for (i = 0; i < balls.length; i++) {
-        balls[i].changeDirection();
+        var gravity = null;
+        for (j = 0; j < gravity_points.length; j++) {
+            if (isInRadius(balls[i], gravity_points[j])) {//&& Math.random() < 0.6) {
+                gravity = gravity_points[j];
+            }
+        }
+        if (gravity == null) {
+            balls[i].randomDirection();
+
+        } else {
+            balls[i].moveTo(gravity.x, gravity.y);
+        }
     }
 }
 
 function isCollision(objA, objB) {
     var rad = Math.max(objA.radius, objB.radius);
     return Math.abs(objA.x - objB.x) <= rad && Math.abs(objA.y - objB.y) <= rad;
+}
+
+function isInRadius(ball, gravityPoint) {
+    return Math.abs(ball.x - gravityPoint.x) <= gravityPoint.extendedRadius
+        && Math.abs(ball.y - gravityPoint.y) < + gravityPoint.extendedRadius;
 }
 
 function collisionDetection() {
@@ -83,9 +102,9 @@ function collisionDetection() {
                 balls[j].infected = true;
             }
         }
-        for(j = 0; j < gravity_points.length; j++) {
+        for (j = 0; j < gravity_points.length; j++) {
             if (isCollision(balls[i], gravity_points[j]) && (balls[i].infected || gravity_points[j].infected) && Math.random() < transmission_rate) {
-                if(!(balls[i].infected)) {
+                if (!(balls[i].infected)) {
                     infected_counter++;
                     balls[i].infected = true;
                 }
@@ -94,6 +113,7 @@ function collisionDetection() {
         }
     }
 }
+
 
 function infectRandomBalls(number) {
     var i;

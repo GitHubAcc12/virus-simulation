@@ -11,21 +11,27 @@ class Ball {
         this.speed = speed;
         this.infected = false;
 
-        this.changeDirection();
-        }
+        this.randomDirection();
+    }
 
-    changeDirection() {
-        this.x_speed = Math.random()*2*this.speed - this.speed;
-        this.y_speed = -(Math.random()*2*this.speed - this.speed);
+    randomDirection() {
+        this.x_speed = Math.random() * 2 * this.speed - this.speed;
+        this.y_speed = -(Math.random() * 2 * this.speed - this.speed);
+    }
+
+    moveTo(to_x, to_y) {
+        this.x_speed = (to_x - this.x)/10;
+        this.y_speed = (to_y - this.y)/10;
+        console.log(`Speed: ${this.x_speed}`);
     }
 
     moveSelf() {
         if (this.x + this.x_speed > this.max_x - this.radius || this.x + this.x_speed < this.radius) {
             this.x_speed = -this.x_speed;
-        } 
+        }
         if (this.y + this.y_speed > this.max_y - this.radius || this.y + this.y_speed < this.radius) {
             this.y_speed = -this.y_speed;
-        } 
+        }
 
         this.x += this.x_speed;
         this.y += this.y_speed;
@@ -33,7 +39,7 @@ class Ball {
 
     drawSelf() {
         this.moveSelf();
-        if(this.infected) {
+        if (this.infected) {
             ctx.fillStyle = "red";
         } else {
             ctx.fillStyle = "blue";

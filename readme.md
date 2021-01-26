@@ -2,7 +2,9 @@
 
 #### Todos
 - [x] Collision Detection
-- [ ] Build Gravity Points --> Cities
+- [ ] Add Cured or Died feature
+- [ ] R O U T I N E give each ball a random routine, makes it more human
+- [x] Build Gravity Points --> Cities
 - [ ] Build Continents containing cities
 - [ ] Make water between continents
 - [ ] Make movement across water rare

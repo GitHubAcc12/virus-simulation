@@ -4,6 +4,7 @@
 - [x] Collision Detection
 - [x] Add Cured or Died feature
 - [ ] Immunity after recovered
+- [ ] Add dead/recovered counter
 - [ ] Make disease duration normal distributed
 - [x] Add concept of time!!!
 - [ ] Differentiate between sick and infective

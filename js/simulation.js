@@ -14,6 +14,7 @@ var intervals = [];
 var movement_speed = 9;
 var infection_data_plot = [];
 var gravity_points = [];
+var gravity_point_timeouts = [];
 var balls = [];
 var population;
 var disease_duration;
@@ -152,15 +153,18 @@ function collisionDetection() {
                     balls[i].infected = true;
                     killBallLater(i)
                 }
+                if(gravity_points[j].infected) {
+                    gravity_point_timeouts[j].clearTimeout();
+                }
                 gravity_points[j].infected = true;
-                cureGravityPointLater(j);
+                gravity_point_timeouts[j] = cureGravityPointLater(j);
             }
         }
     }
 }
 
 function cureGravityPointLater(g_index) {
-    setTimeout(() => { gravity_points[g_index].infected = false; }, DAY_LENGTH*0.7);
+    return setTimeout(() => { gravity_points[g_index].infected = false; }, DAY_LENGTH*0.6);
 }
 
 
@@ -215,6 +219,7 @@ function getConfigValues() {
         gravity = parseInt(gravity);
         for (; gravity > 0; gravity--) {
             gravity_points.push(new GravityPoint(ctx, Math.random() * canvas.width, Math.random() * canvas.height, true, ballRadius * 3.5));
+            gravity_point_timeouts.push(null);
         }
     }
     var lethality = document.getElementById("lethality-rate-input").value;

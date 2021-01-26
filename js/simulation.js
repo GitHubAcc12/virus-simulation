@@ -14,7 +14,9 @@ var initially_infected = 1;
 var intervals = [];
 var movement_speed = 9;
 var infection_data_plot = [];
+var gravity_points = [];
 var population;
+
 
 var canvas_info = {
     "ballRadius": ballRadius,
@@ -38,6 +40,9 @@ function draw() {
     for (i = 0; i < balls.length; i++) {
         balls[i].drawSelf();
     }
+    for(i = 0; i < gravity_points.length; i++) {
+        gravity_points[i].drawSelf();
+    }
     collisionDetection();
 
     // is everyone infected? Draw plot!
@@ -57,8 +62,9 @@ function changeBallDirections() {
     }
 }
 
-function isCollision(i, j) {
-    return Math.abs(balls[i].x - balls[j].x) <= ballRadius && Math.abs(balls[i].y - balls[j].y) <= ballRadius;
+function isCollision(objA, objB) {
+    var rad = Math.max(objA.radius, objB.radius);
+    return Math.abs(objA.x - objB.x) <= rad && Math.abs(objA.y - objB.y) <= rad;
 }
 
 function collisionDetection() {
@@ -69,14 +75,21 @@ function collisionDetection() {
             if (i == j) {
                 continue;
             }
-            if (isCollision(i, j) && (balls[i].infected || balls[j].infected) && Math.random() < transmission_rate) {
+            if (isCollision(balls[i], balls[j]) && (balls[i].infected || balls[j].infected) && Math.random() < transmission_rate) {
                 if (!(balls[i].infected && balls[j].infected)) {
                     infected_counter++;
                 }
                 balls[i].infected = true;
                 balls[j].infected = true;
-
-
+            }
+        }
+        for(j = 0; j < gravity_points.length; j++) {
+            if (isCollision(balls[i], gravity_points[j]) && (balls[i].infected || gravity_points[j].infected) && Math.random() < transmission_rate) {
+                if(!(balls[i].infected)) {
+                    infected_counter++;
+                    balls[i].infected = true;
+                }
+                gravity_points[j].infected = true;
             }
         }
     }
@@ -121,6 +134,7 @@ function loadConfig() {
 
     infected_counter = initially_infected;
     balls = [];
+    gravity_points = [];
 
     // get user configured values
     var conf_population = document.getElementById("population-input").value;
@@ -136,6 +150,14 @@ function loadConfig() {
     if (move_speed != "") {
         movement_speed = move_speed;
     }
+    var gravity = document.getElementById("gravity-points-input").value;
+    if (gravity != "") {
+        gravity = parseInt(gravity);
+        for (; gravity > 0; gravity--) {
+            gravity_points.push(new GravityPoint(ctx, Math.random() * canvas.width, Math.random() * canvas.height, true, ballRadius * 3.5));
+        }
+    }
+
     // Balls all start on the same point, move around and get drawn to density hubs
     // Then after 10 seconds disease starts spreading
     var i;

@@ -17,7 +17,7 @@ var gravity_points = [];
 var gravity_point_timeouts = [];
 var balls = [];
 var population;
-var disease_duration;
+var disease_duration = 1000000;
 var lethality_rate;
 
 const DAY_LENGTH = 1000;
@@ -154,7 +154,7 @@ function collisionDetection() {
                     killBallLater(i)
                 }
                 if(gravity_points[j].infected) {
-                    gravity_point_timeouts[j].clearTimeout();
+                    clearTimeout(gravity_point_timeouts[j]);
                 }
                 gravity_points[j].infected = true;
                 gravity_point_timeouts[j] = cureGravityPointLater(j);
@@ -180,7 +180,6 @@ function infectRandomBalls(number) {
 }
 
 function showChart() {
-    console.log(infection_data_plot);
     functionPlot({
         target: '#polyline',
         width: 800,
@@ -207,7 +206,6 @@ function getConfigValues() {
     }
     var user_transmission_rate = document.getElementById("transmission-rate-input").value;
     if (user_transmission_rate != "") {
-        console.log("Transmission rate: " + user_transmission_rate);
         transmission_rate = parseFloat(user_transmission_rate);
     }
     var move_speed = parseFloat(document.getElementById("movement-speed-input").value);

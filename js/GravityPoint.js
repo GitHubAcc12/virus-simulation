@@ -12,7 +12,6 @@ class GravityPoint {
 
     cureSelf() {
         this.infected = false;
-        console.log("Cured!");
         this.drawSelf();
     }
 

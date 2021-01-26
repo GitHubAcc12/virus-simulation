@@ -5,6 +5,7 @@
  
  canvas {
     display: inline;
+    align-self: center;
  }
 
  .heading {

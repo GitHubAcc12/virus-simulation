@@ -1,7 +1,7 @@
 var chart;
 
 function plotChart() {
-  document.getElementById("plot-heading").style.visibility = "visible";s
+  document.getElementById("plot-heading").style.visibility = "visible";
   var context = document.getElementById("chart").getContext("2d");
 
   chart = new Chart(context, {

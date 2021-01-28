@@ -21,6 +21,7 @@ var balls = [];
 var population;
 var disease_duration = 1000000;
 var lethality_rate;
+var timeoutStore = [];
 
 
 const DAY_LENGTH = 1000;
@@ -53,11 +54,6 @@ function draw() {
     gravity_points[i].drawSelf();
   }
   collisionDetection();
-
-  // is everyone infected? Draw plot!
-  /*if (everyoneInfected()) {
-        showChart();
-    }*/
 }
 
 function kill(ball) {
@@ -68,12 +64,13 @@ function kill(ball) {
     ball.recover();
     recovered_counter++;
   }
+  infected_counter--;
 }
 
 function killBallLater(ball) {
-  setTimeout(() => {
+  timeoutStore.push(setTimeout(() => {
     kill(ball);
-  }, disease_duration * DAY_LENGTH);
+  }, disease_duration * DAY_LENGTH));
 }
 
 function incrementDaysPassed() {
@@ -85,10 +82,6 @@ function showDaysPassedText() {
   const text = "Day " + days_passed;
   ctx.fillStyle = "#000000";
   ctx.fillText(text, canvas.width / 2 - ctx.measureText(text).width / 2, 20);
-}
-
-function everyoneInfected() {
-  return population == infected_counter;
 }
 
 function changeBallDirections() {
@@ -246,6 +239,10 @@ function removeOldConfig() {
   // stop intervals
   while (intervals.length > 0) {
     clearInterval(intervals.pop());
+  }
+
+  while (timeoutStore.length > 0) {
+    clearTimeout(timeoutStore.pop());
   }
 
   infected_counter = initially_infected;

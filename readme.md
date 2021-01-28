@@ -3,9 +3,10 @@
 #### Todos
 - [x] Collision Detection
 - [x] Add Cured or Died feature
-- [ ] Immunity after recovered or do something else for the graphs!! See how government does it
+- [x] Immunity after recovered or do something else for the graphs!! See how government does it
 - [ ] Bootstrap this shit or make it pretty somehow
-- [ ] Add dead/recovered counter
+- [ ] Problem: one encounter that should have a fixed transmission chance has that chance every 10ms due to draw fct
+- [x] Add dead/recovered counter
 - [ ] Make disease duration normal distributed
 - [x] Add concept of time!!!
 - [ ] Differentiate between sick and infective

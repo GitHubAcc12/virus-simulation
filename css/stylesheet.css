@@ -8,6 +8,10 @@
   margin: auto;
 }
 
+#plot-heading{
+  visibility: hidden;
+}
+
 #simulation {
   display: inline;
   align-self: center;

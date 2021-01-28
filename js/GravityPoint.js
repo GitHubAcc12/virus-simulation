@@ -16,8 +16,12 @@ class GravityPoint {
   }
 
   infect() {
+    if(this.infected) {
+      return false;
+    }
     this.infected = true;
     this.color = "orange";
+    return true;
   }
 
   drawSelf() {

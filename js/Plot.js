@@ -16,7 +16,7 @@ function plotChart() {
           data: [],
         },
         {
-          label: "Recovered",
+          label: "Immune",
           backgroundColor: "rgba(99, 255, 132, 0.1)",
           borderColor: "rgb(99, 255, 132)",
           data: [],
@@ -52,5 +52,6 @@ function updateChart(
 function clearChart() {
   if (chart != null) {
     chart.clear();
+    chart.destroy();
   }
 }

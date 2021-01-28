@@ -188,21 +188,6 @@ function infectRandomBalls(number) {
   }
 }
 
-function showChart() {
-  functionPlot({
-    target: "#polyline",
-    width: 800,
-    height: 500,
-    data: [
-      {
-        points: infection_data_plot,
-        fnType: "points",
-        graphType: "polyline",
-      },
-    ],
-  });
-}
-
 function getConfigValues() {
   // get user configured values
   var conf_population = document.getElementById("population-input").value;

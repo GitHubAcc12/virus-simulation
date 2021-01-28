@@ -149,23 +149,24 @@ function collisionDetection() {
         }
       }
     }
-  }
-  for (j = 0; j < gravity_points.length; j++) {
-    if (
-      isCollision(balls[i], gravity_points[j]) &&
-      (balls[i].infected || gravity_points[j].infected) &&
-      Math.random() < transmission_rate
-    ) {
-      if (!balls[i].infected) {
-        infected_counter++;
-        balls[i].infected = true;
-        killBallLater(balls[i]);
+
+    for (j = 0; j < gravity_points.length; j++) {
+      if (
+        isCollision(balls[i], gravity_points[j]) &&
+        (balls[i].infected || gravity_points[j].infected) &&
+        Math.random() < transmission_rate
+      ) {
+        if (!balls[i].infected) {
+          infected_counter++;
+          balls[i].infected = true;
+          killBallLater(balls[i]);
+        }
+        if (gravity_points[j].infected) {
+          clearTimeout(gravity_point_timeouts[j]);
+        }
+        gravity_points[j].infected = true;
+        gravity_point_timeouts[j] = cureGravityPointLater(j);
       }
-      if (gravity_points[j].infected) {
-        clearTimeout(gravity_point_timeouts[j]);
-      }
-      gravity_points[j].infected = true;
-      gravity_point_timeouts[j] = cureGravityPointLater(j);
     }
   }
 }

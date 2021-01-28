@@ -9,25 +9,24 @@ function plotChart() {
       labels: [],
       datasets: [
         {
-          label: "Deaths",
-          backgroundColor: "rgb(99, 132, 255)",
-          borderColor: "rgb(99, 132, 255)",
+          label: "Infected",
+          backgroundColor: "rgba(255, 99, 132, 0.1)",
+          borderColor: "rgb(255, 99, 132)",
           data: [],
         },
         {
           label: "Recovered",
-          backgroundColor: "rgb(99, 255, 132)",
+          backgroundColor: "rgba(99, 255, 132, 0.1)",
           borderColor: "rgb(99, 255, 132)",
           data: [],
         },
-
         {
-          label: "Infected",
-          backgroundColor: "rgb(255, 99, 132)",
-          borderColor: "rgb(255, 99, 132)",
+          label: "Deaths",
+          backgroundColor: "rgba(99, 132, 255, 0.1)",
+          borderColor: "rgb(99, 132, 255)",
           data: [],
-        },
-      ],
+        }
+      ]
     },
 
     options: {},
@@ -42,17 +41,12 @@ function updateChart(
 ) {
   chart.data.labels.push(day);
 
-  chart.data.datasets[2].data.push(latestInfectionCount);
+  chart.data.datasets[0].data.push(latestInfectionCount);
   chart.data.datasets[1].data.push(latestRecoveredCount);
-  chart.data.datasets[0].data.push(latestDeathCount);
-  preserveRightOrder();
+  chart.data.datasets[2].data.push(latestDeathCount);
   chart.update();
 }
 
-function preserveRightOrder() {
-  // Do any good sorting algorithm PLEASE I'm too tired
-  return;
-}
 
 function clearChart() {
   if (chart != null) {

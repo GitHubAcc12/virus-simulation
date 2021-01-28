@@ -9,7 +9,7 @@ var y = canvas.height - 30;
 var ballRadius = 5;
 var infected_counter;
 var death_counter;
-var recovered_counter;
+var immune_counter;
 var transmission_rate = 1;
 var initially_infected = 1;
 var intervals = [];
@@ -21,8 +21,8 @@ var balls = [];
 var population;
 var disease_duration = 1000000;
 var lethality_rate;
+var immunity_days;
 var timeoutStore = [];
-
 
 const DAY_LENGTH = 1000;
 
@@ -62,15 +62,27 @@ function kill(ball) {
     death_counter++;
   } else {
     ball.recover();
-    recovered_counter++;
+    immune_counter++;
+    timeoutStore.push(
+      setTimeout(() => {
+        setBallSusceptible(ball);
+      }, immunity_days * DAY_LENGTH)
+    );
   }
   infected_counter--;
 }
 
+function setBallSusceptible(ball) {
+  ball.setSusceptible();
+  immune_counter--;
+}
+
 function killBallLater(ball) {
-  timeoutStore.push(setTimeout(() => {
-    kill(ball);
-  }, disease_duration * DAY_LENGTH));
+  timeoutStore.push(
+    setTimeout(() => {
+      kill(ball);
+    }, disease_duration * DAY_LENGTH)
+  );
 }
 
 function incrementDaysPassed() {
@@ -127,34 +139,33 @@ function collisionDetection() {
         (balls[i].infected || balls[j].infected) &&
         Math.random() < transmission_rate
       ) {
-        if (!(balls[i].infected && balls[j].infected)) {
-          infected_counter++;
-        }
         if (balls[i].infect()) {
           killBallLater(balls[i]);
+          infected_counter++;
         }
         if (balls[j].infect()) {
           killBallLater(balls[j]);
+          infected_counter++;
         }
       }
     }
-    for (j = 0; j < gravity_points.length; j++) {
-      if (
-        isCollision(balls[i], gravity_points[j]) &&
-        (balls[i].infected || gravity_points[j].infected) &&
-        Math.random() < transmission_rate
-      ) {
-        if (!balls[i].infected) {
-          infected_counter++;
-          balls[i].infected = true;
-          killBallLater(balls[i]);
-        }
-        if (gravity_points[j].infected) {
-          clearTimeout(gravity_point_timeouts[j]);
-        }
-        gravity_points[j].infected = true;
-        gravity_point_timeouts[j] = cureGravityPointLater(j);
+  }
+  for (j = 0; j < gravity_points.length; j++) {
+    if (
+      isCollision(balls[i], gravity_points[j]) &&
+      (balls[i].infected || gravity_points[j].infected) &&
+      Math.random() < transmission_rate
+    ) {
+      if (!balls[i].infected) {
+        infected_counter++;
+        balls[i].infected = true;
+        killBallLater(balls[i]);
       }
+      if (gravity_points[j].infected) {
+        clearTimeout(gravity_point_timeouts[j]);
+      }
+      gravity_points[j].infected = true;
+      gravity_point_timeouts[j] = cureGravityPointLater(j);
     }
   }
 }
@@ -233,6 +244,10 @@ function getConfigValues() {
   if (dis_dur != "") {
     disease_duration = dis_dur;
   }
+  var im_dur = document.getElementById("immunity-input").value;
+  if (im_dur != "") {
+    immunity_days = parseInt(im_dur);
+  }
 }
 
 function removeOldConfig() {
@@ -247,14 +262,14 @@ function removeOldConfig() {
 
   infected_counter = initially_infected;
   death_counter = 0;
-  recovered_counter = 0;
+  immune_counter = 0;
   balls = [];
   gravity_points = [];
   days_passed = 0;
 }
 
 function updateCharts() {
-  updateChart(infected_counter, death_counter, recovered_counter, days_passed);
+  updateChart(infected_counter, death_counter, immune_counter, days_passed);
 }
 
 function loadConfig() {

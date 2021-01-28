@@ -11,6 +11,7 @@ class Ball {
     this.last_visited_city;
     this.infected_days = 0;
     this.dead = false;
+    this.immune = false;
     this.color = "blue";
     this.randomDirection();
   }
@@ -34,8 +35,14 @@ class Ball {
     }
   }
 
+  moveToOppositeDirection() {
+    // Supposed to create "bounce-off" effect from other balls
+    this.x_speed = -this.x_speed;
+    this.y_speed = -this.y_speed;
+  }
+
   infect() {
-    if (this.infected) {
+    if (this.infected || this.immune) {
       return false;
     }
     this.infected = true;
@@ -43,9 +50,20 @@ class Ball {
     return true;
   }
 
+  setImmune() {
+    this.immune = true;
+    this.color = "green";
+  }
+
+  setSusceptible() {
+    this.immune = false;
+    this.color = "blue";
+  }
+
   recover() {
     this.infected = false;
     this.color = "blue";
+    this.setImmune();
   }
   /*
     kill() {

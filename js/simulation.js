@@ -156,16 +156,17 @@ function collisionDetection() {
         (balls[i].infected || gravity_points[j].infected) &&
         Math.random() < transmission_rate
       ) {
-        if (!balls[i].infected) {
+        if (balls[i].infect()) {
+          // either the ball was infective, in which case this returns 
+          // false, or the gravity hub infects the ball now, so it is 
+          // safe to call infect() here
           infected_counter++;
-          balls[i].infected = true;
           killBallLater(balls[i]);
-        }
-        if (gravity_points[j].infected) {
+        } else {
+          gravity_points[j].infect();
           clearTimeout(gravity_point_timeouts[j]);
-        }
-        gravity_points[j].infected = true;
-        gravity_point_timeouts[j] = cureGravityPointLater(j);
+          gravity_point_timeouts[j] = cureGravityPointLater(j);
+        }        
       }
     }
   }
@@ -173,7 +174,7 @@ function collisionDetection() {
 
 function cureGravityPointLater(g_index) {
   return setTimeout(() => {
-    gravity_points[g_index].infected = false;
+    gravity_points[g_index].cure();
   }, DAY_LENGTH * 0.6);
 }
 

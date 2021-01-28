@@ -6,23 +6,24 @@ class GravityPoint {
     this.inside = inside;
     this.infected = false;
     this.radius = radius;
+    this.color = "green";
     this.extendedRadius = radius * 5;
   }
 
-  cureSelf() {
+  cure() {
     this.infected = false;
-    this.drawSelf();
+    this.color = "green";
+  }
+
+  infect() {
+    this.infected = true;
+    this.color = "orange";
   }
 
   drawSelf() {
-    if (this.infected) {
-      ctx.fillStyle = "orange";
-      ctx.strokeStyle = "orange";
-    } else {
-      ctx.fillStyle = "green";
-      ctx.strokeStyle = "green";
-    }
 
+    ctx.fillStyle = this.color;
+    ctx.strokeStyle = this.color;
     ctx.beginPath();
     ctx.setLineDash([]);
     ctx.arc(this.x, this.y, this.radius * 0.5, 0, Math.PI * 2);

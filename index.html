@@ -8,7 +8,7 @@
 
 <body>
     <h1 class="heading">HOHOHO</h1>
-    <div id="canvas-container">
+    <div class="canvas-container">
         <canvas id="simulation"></canvas>
     </div>
     <h3 class="heading">Configuration</h3>
@@ -68,14 +68,18 @@
 
     <br />
     <h3 class="heading"> Examination </h3>
-    Lol funktioniert nicht
-    <div id="polyplot"></div>
+    <div class="plot-container">
+        <canvas id="chart"></canvas>
+    </div>
+
+
 
 
     <!-- Simulation comes from this JavaScript -->
     <script src="./js/Ball.js"></script>
     <script src="./js/GravityPoint.js"></script>
-    <script src="https://unpkg.com/function-plot/dist/function-plot.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script src="./js/Plot.js"></script>
     <script src="./js/simulation.js"></script>
 </body>
 

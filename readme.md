@@ -3,7 +3,8 @@
 #### Todos
 - [x] Collision Detection
 - [x] Add Cured or Died feature
-- [ ] Immunity after recovered
+- [ ] Immunity after recovered or do something else for the graphs!! See how government does it
+- [ ] Bootstrap this shit or make it pretty somehow
 - [ ] Add dead/recovered counter
 - [ ] Make disease duration normal distributed
 - [x] Add concept of time!!!

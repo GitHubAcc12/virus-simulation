@@ -160,6 +160,8 @@ function collisionDetection() {
           infected_counter++;
           killBallLater(balls[i]);
         } else if(!balls[i].immune){ // TODO this is pretty ugly
+          // The ball either infected the city here, or it was 
+          // immune and didn't infect it
           gravity_points[j].infect();
           resetTimeoutForGravityPoint(j);
         }        

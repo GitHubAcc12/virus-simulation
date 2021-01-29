@@ -34,8 +34,12 @@ class Ball {
   }
 
   expose() {
+    if(this.state === InfectionState.exposed || this.state === InfectionState.infected || this.state === InfectionState.immune) {
+      return false;
+    }
     this.state = InfectionState.exposed;
     this.color = "purple";
+    return true;
   }
 
   moveToOppositeDirection() {
@@ -45,12 +49,8 @@ class Ball {
   }
 
   infect() {
-    if (this.state === InfectionState.infected || this.state === InfectionState.immune) {
-      return false;
-    }
     this.state = InfectionState.infected; 
     this.color = "red";
-    return true;
   }
 
   recover() {
@@ -62,7 +62,7 @@ class Ball {
     this.state = InfectionState.susceptible;
     this.color = "blue";
   }
-  
+
   moveSelf() {
     if (
       this.x + this.x_speed > this.max_x - this.radius ||

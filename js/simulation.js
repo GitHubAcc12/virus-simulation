@@ -11,7 +11,6 @@ var infected_counter;
 var death_counter;
 var immune_counter;
 var transmission_rate = 1;
-var initially_infected = 1;
 var intervals = [];
 var movement_speed = 9;
 
@@ -19,6 +18,7 @@ var gravity_points = [];
 var gravity_point_timeouts = [];
 var balls = [];
 var population;
+var incubation_period;
 var disease_duration = 1000000;
 var lethality_rate;
 var immunity_days;
@@ -126,6 +126,13 @@ function isInRadius(ball, gravityPoint) {
   );
 }
 
+function infectBallLater(ball) {
+  setTimeout(() => { ball.infect(); }, incubation_period*DAY_LENGTH);
+  
+  infected_counter++;
+  killBallLater(ball);
+}
+
 function collisionDetection() {
   var i;
   var j;
@@ -139,13 +146,11 @@ function collisionDetection() {
         (balls[i].state === InfectionState.infected || balls[j].state === InfectionState.infected) &&
         Math.random() < transmission_rate
       ) {
-        if (balls[i].infect()) {
-          killBallLater(balls[i]);
-          infected_counter++;
+        if (balls[i].expose()) {
+          infectBallLater(balls[i]);
         }
-        if (balls[j].infect()) {
-          killBallLater(balls[j]);
-          infected_counter++;
+        if (balls[j].expose()) {
+          infectBallLater(balls[j]);
         }
       }
     }
@@ -156,9 +161,8 @@ function collisionDetection() {
         (balls[i].state === InfectionState.infected || gravity_points[j].infected) &&
         Math.random() < transmission_rate
       ) {
-        if (balls[i].infect()) {
-          infected_counter++;
-          killBallLater(balls[i]);
+        if (balls[i].expose()) {
+          infectBallLater(balls[i]);
         } else if(!(balls[i].state === InfectionState.immune)){ // TODO this is pretty ugly
           // The ball either infected the city here, or it was 
           // immune and didn't infect it
@@ -181,15 +185,10 @@ function cureGravityPointLater(g_index) {
   }, DAY_LENGTH * 0.6);
 }
 
-function infectRandomBalls(number) {
-  var i;
-  for (i = 0; i < number; i++) {
-    var ballIndex = Math.floor(Math.random() * balls.length);
-    while (!balls[ballIndex].infect()) {
-      ballIndex = Math.floor(Math.random() * balls.length);
-    }
-    killBallLater(balls[ballIndex]);
-  }
+function infectRandomBalls() {
+  var ballIndex = Math.floor(Math.random() * balls.length);
+  balls[ballIndex].infect();
+  killBallLater(balls[ballIndex]);
 }
 
 function getConfigValues() {
@@ -238,6 +237,10 @@ function getConfigValues() {
   if (im_dur != "") {
     immunity_days = parseInt(im_dur);
   }
+  var incubation = document.getElementById("incubation-period-input").value;
+  if (incubation != "") {
+    incubation_period = parseInt(incubation);
+  }
 }
 
 function removeOldConfig() {
@@ -250,7 +253,7 @@ function removeOldConfig() {
     clearTimeout(timeoutStore.pop());
   }
 
-  infected_counter = initially_infected;
+  infected_counter = 1; // Start with 1 infection
   death_counter = 0;
   immune_counter = 0;
   balls = [];
@@ -281,7 +284,7 @@ function loadConfig() {
     balls.push(ball);
     ball.drawSelf();
   }
-  infectRandomBalls(initially_infected);
+  infectRandomBalls();
 
   plotChart();
 

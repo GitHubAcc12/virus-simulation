@@ -2,6 +2,12 @@
 <html>
   <head>
     <link rel="stylesheet" href="./css/stylesheet.css" />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
+      crossorigin="anonymous"
+    />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
   </head>
 
@@ -12,17 +18,19 @@
         <canvas id="simulation"></canvas>
       </div>
 
-      <div class="table">
-        <div class="tr">
-          <div class="td">
+      <div class="_table table-responsive table-sm">
+        <div class="_tr">
+          <div class="_td">
             <h3 class="heading">Configuration</h3>
             <table id="config-table">
+                <thead class="thead-dark">
               <tr>
                 <td>Population</td>
                 <td>Immunity after Recovery</td>
                 <td>Cities</td>
                 <td>Movement Speed</td>
               </tr>
+            </thead>
               <tr>
                 <td>
                   <input id="population-input" type="number" value="1000" />
@@ -47,12 +55,14 @@
                   </div>
                 </td>
               </tr>
+              <thead class="thead-dark">
               <tr>
                 <td>Transmission Rate</td>
                 <td>Incubation Period (Days)</td>
                 <td>Lethality Rate</td>
                 <td>Disease Duration</td>
               </tr>
+            </thead>
               <tr>
                 <td>
                   <div class="slidercontainer">
@@ -92,11 +102,9 @@
                 </td>
               </tr>
             </table>
-
-
           </div>
 
-          <div class="td center-wrapper">
+          <div class="_td center-wrapper">
             <h3 class="heading">Examination</h3>
             <div class="plot-container">
               <canvas id="chart"></canvas>
@@ -105,7 +113,12 @@
         </div>
       </div>
       <div class="center-wrapper">
-        <button id="load-config-btton" onclick="loadConfig();">
+        <button
+          type="button"
+          id="load-config-btton"
+          class="btn btn btn-dark"
+          onclick="loadConfig();"
+        >
           Load Configuration
         </button>
       </div>

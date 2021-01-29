@@ -7,11 +7,9 @@ class Ball {
     this.radius = canvas_info["ballRadius"];
     this.ctx = ctx;
     this.speed = speed;
-    this.infected = false;
+    this.state = InfectionState.susceptible;
     this.last_visited_city;
     this.infected_days = 0;
-    this.dead = false;
-    this.immune = false;
     this.color = "blue";
     this.randomDirection();
   }
@@ -35,6 +33,11 @@ class Ball {
     }
   }
 
+  expose() {
+    this.state = InfectionState.exposed;
+    this.color = "purple";
+  }
+
   moveToOppositeDirection() {
     // Supposed to create "bounce-off" effect from other balls
     this.x_speed = -this.x_speed;
@@ -42,39 +45,24 @@ class Ball {
   }
 
   infect() {
-    if (this.infected || this.immune) {
+    if (this.state === InfectionState.infected || this.state === InfectionState.immune) {
       return false;
     }
-    this.infected = true;
+    this.state = InfectionState.infected; 
     this.color = "red";
     return true;
   }
 
-  setImmune() {
-    this.immune = true;
+  recover() {
+    this.state = InfectionState.immune;
     this.color = "green";
   }
 
   setSusceptible() {
-    this.immune = false;
+    this.state = InfectionState.susceptible;
     this.color = "blue";
   }
-
-  recover() {
-    this.infected = false;
-    this.color = "blue";
-    this.setImmune();
-  }
-  /*
-    kill() {
-        if (Math.random() < this.lethality_rate) {
-            this.dead = true;
-            this.color = "black";
-        } else {
-            this.infected = false;
-        }
-    }
-    */
+  
   moveSelf() {
     if (
       this.x + this.x_speed > this.max_x - this.radius ||

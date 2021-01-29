@@ -136,7 +136,7 @@ function collisionDetection() {
       }
       if (
         isCollision(balls[i], balls[j]) &&
-        (balls[i].infected || balls[j].infected) &&
+        (balls[i].state === InfectionState.infected || balls[j].state === InfectionState.infected) &&
         Math.random() < transmission_rate
       ) {
         if (balls[i].infect()) {
@@ -153,13 +153,13 @@ function collisionDetection() {
     for (j = 0; j < gravity_points.length; j++) {
       if (
         isCollision(balls[i], gravity_points[j]) &&
-        (balls[i].infected || gravity_points[j].infected) &&
+        (balls[i].state === InfectionState.infected || gravity_points[j].infected) &&
         Math.random() < transmission_rate
       ) {
         if (balls[i].infect()) {
           infected_counter++;
           killBallLater(balls[i]);
-        } else if(!balls[i].immune){ // TODO this is pretty ugly
+        } else if(!(balls[i].state === InfectionState.immune)){ // TODO this is pretty ugly
           // The ball either infected the city here, or it was 
           // immune and didn't infect it
           gravity_points[j].infect();

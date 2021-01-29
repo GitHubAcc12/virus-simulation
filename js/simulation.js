@@ -35,6 +35,7 @@ var canvas_info = {
 function initialize() {
   resizeCanvas();
   window.addEventListener("resize", resizeCanvas, false);
+  plotChart();
 }
 
 function resizeCanvas() {
@@ -267,9 +268,8 @@ function updateCharts() {
 
 function loadConfig() {
   removeOldConfig();
-  clearChart();
-
   getConfigValues();
+  
   // Balls all start on the same point, move around and get drawn to density hubs
   // Then after 10 seconds disease starts spreading
   var i;

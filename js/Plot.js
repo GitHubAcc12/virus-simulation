@@ -1,7 +1,7 @@
 var chart;
 
 function plotChart() {
-  document.getElementById("plot-heading").style.visibility = "visible";
+  clearChart();
   var context = document.getElementById("chart").getContext("2d");
 
   chart = new Chart(context, {
@@ -30,7 +30,9 @@ function plotChart() {
       ]
     },
 
-    options: {},
+    options: {
+      maintainAspectRatio: false
+    },
   });
 }
 
@@ -53,5 +55,6 @@ function clearChart() {
   if (chart != null) {
     chart.clear();
     chart.destroy();
+    chart = null;
   }
 }

@@ -1,21 +1,14 @@
-### Nice Ass Virus Simulation
+### Virus Simulation
 
 #### Todos
-- [x] Collision Detection
-- [x] Add Cured or Died feature
-- [x] Immunity after recovered or do something else for the graphs!! See how government does it
-- [ ] Bootstrap this shit or make it pretty somehow
-- [ ] Problem: one encounter that should have a fixed transmission chance has that chance every 10ms due to draw fct
-- [x] Add dead/recovered counter
-- [ ] Make disease duration normal distributed
-- [x] Add concept of time!!!
-- [ ] Differentiate between sick and infective
-- [ ] R O U T I N E give each ball a random routine, makes it more human (eg. movement per day)
-- [x] Build Gravity Points --> Cities
-- [ ] Build Continents containing cities
-- [ ] Make water between continents
-- [ ] Make movement across water rare
-- [ ] Create a scale of measure and adjust movement to that
-- [ ] Time of day impacting movement
-- [ ] Produce a plot at the end showing how long it took
-- [ ] Mask feature with little masks on the balls lol
+- Bootstrap or make it pretty somehow
+- Problem: one encounter that should have a fixed transmission chance has that chance every 10ms due to draw fct
+- Make disease duration normal distributed
+- Maybe routine? give each ball a random routine, makes it more human (eg. movement per day)
+- Build Continents containing cities
+- Make water between continents
+- Make movement across water rare
+- Create a scale of measure and adjust movement to that
+- Time of day impacting movement
+- Produce a plot at the end showing how long it took
+- Mask feature with little masks on the balls lol

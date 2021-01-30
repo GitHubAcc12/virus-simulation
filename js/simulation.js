@@ -1,5 +1,5 @@
-var canvas = document.getElementById("simulation");
-var ctx = canvas.getContext("2d");
+const canvas = document.getElementById("simulation");
+const ctx = canvas.getContext("2d");
 var days_passed = 0;
 
 initialize();

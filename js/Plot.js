@@ -1,8 +1,10 @@
 var chart;
+var chartCanvas; 
 
 function plotChart() {
   clearChart();
-  var context = document.getElementById("chart").getContext("2d");
+  chartCanvas = document.getElementById("chart");
+  var context = chartCanvas.getContext("2d");
 
   chart = new Chart(context, {
     type: "line",
@@ -35,6 +37,7 @@ function plotChart() {
     },
   });
 }
+
 
 function updateChart(
   latestInfectionCount,

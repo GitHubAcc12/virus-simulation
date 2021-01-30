@@ -37,7 +37,15 @@ body {
 .plot-container {
   justify-content: center;
   margin: 5px;
+  width: auto;
+  height: auto;
   background-color: #191c1a;
+  transition: all 0.4s ease;
+}
+
+.plot-container:hover {
+  transform: scale(2);
+  transform-origin: bottom right;
 }
 
 #simulation {
@@ -63,7 +71,6 @@ body {
   vertical-align: middle;
   border-spacing: 15px;
 }
-
 
 .center-wrapper {
   text-align: center;

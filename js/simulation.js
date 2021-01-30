@@ -47,11 +47,10 @@ function resizeCanvas() {
 function draw() {
   ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
   showDaysPassedText();
-  var i;
-  for (i = 0; i < balls.length; i++) {
+  for (var i = 0; i < balls.length; i++) {
     balls[i].drawSelf();
   }
-  for (i = 0; i < gravity_points.length; i++) {
+  for (var i = 0; i < gravity_points.length; i++) {
     gravity_points[i].drawSelf();
   }
   collisionDetection();
@@ -98,11 +97,9 @@ function showDaysPassedText() {
 }
 
 function changeBallDirections() {
-  var i;
-  var j;
-  for (i = 0; i < balls.length; i++) {
+  for (var i = 0; i < balls.length; i++) {
     var gravity = null;
-    for (j = 0; j < gravity_points.length; j++) {
+    for (var j = 0; j < gravity_points.length; j++) {
       if (isInRadius(balls[i], gravity_points[j]) && Math.random() < 0.6) {
         gravity = gravity_points[j];
       }
@@ -135,10 +132,8 @@ function infectBallLater(ball) {
 }
 
 function collisionDetection() {
-  var i;
-  var j;
-  for (i = 0; i < balls.length; i++) {
-    for (j = 0; j < balls.length; j++) {
+  for (var i = 0; i < balls.length; i++) {
+    for (var j = 0; j < balls.length; j++) {
       if (i == j) {
         continue;
       }
@@ -156,7 +151,7 @@ function collisionDetection() {
       }
     }
 
-    for (j = 0; j < gravity_points.length; j++) {
+    for (var j = 0; j < gravity_points.length; j++) {
       if (
         isCollision(balls[i], gravity_points[j]) &&
         (balls[i].state === InfectionState.infected || gravity_points[j].infected) &&
@@ -272,8 +267,7 @@ function loadConfig() {
   
   // Balls all start on the same point, move around and get drawn to density hubs
   // Then after 10 seconds disease starts spreading
-  var i;
-  for (i = 0; i < population; i++) {
+  for (var i = 0; i < population; i++) {
     var ball = new Ball(
       ctx,
       Math.random() * canvas.width,

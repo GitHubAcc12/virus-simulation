@@ -93,7 +93,7 @@ function incrementDaysPassed() {
 function showDaysPassedText() {
   ctx.font = "20px Arial";
   const text = "Day " + days_passed;
-  ctx.fillStyle = "#000000";
+  ctx.fillStyle = "#ffffff";
   ctx.fillText(text, canvas.width / 2 - ctx.measureText(text).width / 2, 20);
 }
 

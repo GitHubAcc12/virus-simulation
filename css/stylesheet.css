@@ -34,8 +34,15 @@ body {
   z-index: -1;
 }
 
+.help {
+  color: #f9f9f9;
+  font-size: small;
+  overflow: hidden;
+}
+
 .plot-container {
   justify-content: center;
+  
   margin: 5px;
   width: auto;
   height: auto;
@@ -44,8 +51,10 @@ body {
 }
 
 .plot-container:hover {
-  transform: scale(2);
-  transform-origin: bottom right;
+  max-width: 100%;
+  max-height: 100%;
+  transform: scale(1.5);
+  transform-origin: right bottom;
 }
 
 #simulation {
@@ -75,7 +84,6 @@ body {
 .center-wrapper {
   text-align: center;
   width: 100%;
-  max-height: 100%;
 }
 
 div._table {

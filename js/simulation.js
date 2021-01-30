@@ -4,29 +4,27 @@ var days_passed = 0;
 
 initialize();
 
-var x = canvas.width / 2;
-var y = canvas.height - 30;
 var ballRadius = 5;
 var infected_counter;
 var death_counter;
 var immune_counter;
-var transmission_rate = 1;
+var transmission_rate;
 var intervals = [];
-var movement_speed = 9;
+var movement_speed;
 
 var gravity_points = [];
 var gravity_point_timeouts = [];
 var balls = [];
 var population;
 var incubation_period;
-var disease_duration = 1000000;
+var disease_duration;
 var lethality_rate;
 var immunity_days;
 var timeoutStore = [];
 
 const DAY_LENGTH = 1000;
 
-var canvas_info = {
+const canvas_info = {
   ballRadius: ballRadius,
   max_x: canvas.width,
   max_y: canvas.height,

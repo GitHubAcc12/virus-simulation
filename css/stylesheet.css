@@ -3,10 +3,11 @@
 }
 
 .container {
-  display: flex;
-  justify-content: center;
-  margin: 5 auto;
-  padding: 50px;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  height: 100vh;
+  top: 0;
 }
 
 button {
@@ -42,7 +43,7 @@ body {
 
 .plot-container {
   justify-content: center;
-  
+
   margin: 5px;
   width: auto;
   height: auto;
@@ -88,6 +89,7 @@ body {
 
 div._table {
   display: table;
+  overflow-x: auto;
 }
 div._tr {
   display: table-row;

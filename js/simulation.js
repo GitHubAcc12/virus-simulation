@@ -173,7 +173,7 @@ function cureGravityPointLater(g_index) {
   }, DAY_LENGTH * 0.6);
 }
 
-function infectRandomBalls() {
+function infectRandomBall() {
   var ballIndex = Math.floor(Math.random() * balls.length);
   balls[ballIndex].infect();
   killBallLater(balls[ballIndex]);
@@ -270,7 +270,7 @@ function loadConfig() {
     balls.push(ball);
     ball.drawSelf();
   }
-  infectRandomBalls();
+  infectRandomBall();
 
   plotChart();
 

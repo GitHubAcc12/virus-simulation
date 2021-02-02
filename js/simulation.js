@@ -44,7 +44,6 @@ function resizeCanvas() {
 
 function draw() {
   ctx.clearRect(0, 0, canvas.clientWidth, canvas.height);
-  showDaysPassedText();
   for (var i = 0; i < balls.length; i++) {
     balls[i].drawSelf();
   }
@@ -88,12 +87,6 @@ function incrementDaysPassed() {
   days_passed++;
 }
 
-function showDaysPassedText() {
-  ctx.font = "20px Arial";
-  const text = "Day " + days_passed;
-  ctx.fillStyle = "#ffffff";
-  ctx.fillText(text, canvas.width / 2 - ctx.measureText(text).width / 2, 20);
-}
 
 function changeBallDirections() {
   for (var i = 0; i < balls.length; i++) {
@@ -180,7 +173,7 @@ function cureGravityPointLater(g_index) {
   }, DAY_LENGTH * 0.6);
 }
 
-function infectRandomBalls() {
+function infectRandomBall() {
   var ballIndex = Math.floor(Math.random() * balls.length);
   balls[ballIndex].infect();
   killBallLater(balls[ballIndex]);
@@ -277,7 +270,7 @@ function loadConfig() {
     balls.push(ball);
     ball.drawSelf();
   }
-  infectRandomBalls();
+  infectRandomBall();
 
   plotChart();
 

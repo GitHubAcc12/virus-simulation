@@ -52,6 +52,7 @@ function draw() {
     gravity_points[i].drawSelf();
   }
   collisionDetection();
+  requestAnimationFrame(draw);
 }
 
 function kill(ball) {
@@ -280,7 +281,7 @@ function loadConfig() {
 
   plotChart();
 
-  intervals.push(setInterval(draw, 10));
+  requestAnimationFrame(draw);
   intervals.push(setInterval(changeBallDirections, 1000));
   intervals.push(setInterval(incrementDaysPassed, DAY_LENGTH));
   intervals.push(setInterval(updateCharts, DAY_LENGTH));

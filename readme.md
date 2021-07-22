@@ -1,5 +1,8 @@
 ## Virus Simulation
 
+### TODOs
+Clean up-- create a class for the simulation to save the variables in, with functions to initialize/end simulations. Particles file not needed anymore, as particles were removed.
+
 ### What is going on
 This application simulates the spread of a virus, like the flu, through an environment filled with hosts.
 Those hosts, here represented by little blue dots, are all susceptible to the virus, and once a configuration has been loaded, they will move randomly.
